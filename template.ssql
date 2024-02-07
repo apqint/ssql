@@ -1,0 +1,58 @@
+CREATE Magazin
+
+with Magazin{
+    CREATE Angajat{
+        id_angajat int DEFINED PRIMARY
+        nume_angajat vchar(50) DEFINED
+        oras_angajat vchar(50) DEFINED
+        tel_angajat vchar(10) DEFINED
+    }
+    GET * FROM Angajat
+    ADD Angajat{
+        1, "Dorin", "Mcdinadns", "12"
+    }   
+    CREATE Categorie{
+        id_categorie int DEFINED PRIMARY
+        descriere_categorie vchar(255) DEFINED
+    }
+    CHANGE Categorie{
+        id=12
+        WHERE ID=1
+    }
+    CREATE Client{
+        id_client int DEFINED PRIMARY
+        nume_client vchar(50) DEFINED
+        oras_client vchar(50) DEFINED
+        tel_client vchar(10) DEFINED
+    }
+
+    CREATE Comanda{
+        id_comanda int DEFINED PRIMARY
+        data_comenzii datetime DEFINED
+        data_delivrarii datetime DEFINED
+        id_client int DEFINED FOREIGN(Client->id_client)
+        id_angajat int NOT NULL FOREIGN(Angajat->id_angajat)
+    }
+
+    CREATE Produs{
+        id_produs int DEFINED PRIMARY
+        denumire_produs vchar(100) DEFINED
+        pret_bucata int DEFINED
+        cantitate_depozit int DEFINED
+        id_categorie int DEFINED FOREIGN(Categorie->id_categorie)
+    }
+
+    CREATE Detalii_comenzi{
+        id_comanda int DEFINED FOREIGN(Comanda->id_comanda)
+        id_produs int DEFINED FOREIGN(Produs->id_produs)
+        pret int DEFINED
+        cantitate_comanda int DEFINED
+    }
+
+    CREATE Furnizor{
+        id_furnizor int DEFINED PRIMARY
+        denumire_furnizor vchar(100) DEFINED
+        oras_furnizor vchar(50) DEFINED
+        tel_furnizor vchar(20) DEFINED
+    }
+}
